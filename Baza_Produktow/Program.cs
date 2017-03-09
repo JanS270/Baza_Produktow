@@ -56,7 +56,7 @@ namespace Baza_Produktow
                 Console.Write(" Wybór: ");
                 str_wybor = Console.ReadLine();
                 wybor = Int32.Parse(str_wybor);
-
+                // kOMENT
                 switch (wybor)
                 {
                     case 1:  // Dodawanie produktu
