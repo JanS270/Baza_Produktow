@@ -19,6 +19,8 @@ namespace Baza_Produktow
             Console.WriteLine(" 2. Sprawdź Stan");
             Console.WriteLine(" 3. Znajdź Produkt");
             Console.WriteLine(" 4. Zmień ilość produktu");
+            Console.WriteLine(" 5. Zmień cenę produktu");
+            Console.WriteLine(" 6. Zmień nazwę produktu");
             Console.WriteLine(" 0. Koniec Progamu");
         }
 
@@ -177,6 +179,108 @@ namespace Baza_Produktow
             }
         }
 
+        private void ZmianaCenyProduktu()
+        {
+            bool good = false;
+
+            while (good == false)
+            {
+                Console.Write("Wprowadź nazwę produktu: ");
+                string nazwap = Console.ReadLine();
+
+                bool znaleziono = false;
+
+                foreach (Produkt elementy in produkty)
+                {
+                    try
+                    {
+                        if (elementy.Nazwa.Equals(nazwap))
+                        {
+                            Console.WriteLine("\nCena zapamiętana: {0,13}\n", elementy.Cena);
+                            Console.Write("Wprowadź nową cenę produktu: ");
+                            string nil = Console.ReadLine();
+                            elementy.Cena = Convert.ToSingle(nil);
+
+                            Console.WriteLine("\nZmieniono Cenę!\n");
+                            Console.WriteLine("Naciśnij enter aby kontynuować...\n");
+                            Console.ReadLine();
+                            Console.Clear();
+
+                            znaleziono = true;
+                            good = true;
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("\nWprowadzono Błędne Dane!");
+                        Console.ReadLine();
+                        good = false;
+                    }
+
+                }
+
+                if (znaleziono == false)
+                {
+                    Console.WriteLine("\nNieznany produkt.\n");
+                    Console.WriteLine("Naciśnij enter aby kontynuować...\n");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
+                znaleziono = false;
+            }
+        }
+
+        private void ZmianaNazwyProduktu()
+        {
+            bool good = false;
+
+            while (good == false)
+            {
+                Console.Write("Wprowadź nazwę produktu: ");
+                string nazwap = Console.ReadLine();
+
+                bool znaleziono = false;
+
+                foreach (Produkt elementy in produkty)
+                {
+                    try
+                    {
+                        if (elementy.Nazwa.Equals(nazwap))
+                        {
+                            Console.WriteLine("\nCena zapamiętana: {0,13}\n", elementy.Nazwa);
+                            Console.Write("Wprowadź nową nazwę produktu: ");
+                            string nil = Console.ReadLine();
+                            elementy.Nazwa = nil;
+
+                            Console.WriteLine("\nZmieniono Nazwę!\n");
+                            Console.WriteLine("Naciśnij enter aby kontynuować...\n");
+                            Console.ReadLine();
+                            Console.Clear();
+
+                            znaleziono = true;
+                            good = true;
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("\nWprowadzono Błędne Dane!");
+                        Console.ReadLine();
+                        good = false;
+                    }
+
+                }
+
+                if (znaleziono == false)
+                {
+                    Console.WriteLine("\nNieznany produkt.\n");
+                    Console.WriteLine("Naciśnij enter aby kontynuować...\n");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
+                znaleziono = false;
+            }
+        }
+
         static void Main(string[] args)     // MAIN 
         {
             Program Instancja = new Program();
@@ -201,7 +305,15 @@ namespace Baza_Produktow
                         break;
 
                     case 4:
-                       Instancja.ZmianaIlosciProduktu();
+                        Instancja.ZmianaIlosciProduktu();
+                        break;
+
+                    case 5:
+                        Instancja.ZmianaCenyProduktu();
+                        break;
+
+                    case 6:
+                        Instancja.ZmianaNazwyProduktu();
                         break;
 
                     case 0:
