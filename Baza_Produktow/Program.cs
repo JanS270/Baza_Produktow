@@ -3,75 +3,130 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProduktLibrary;
 
 namespace Baza_Produktow
 {
-    class Produkt
+    class Program
     {
-        int ilosc = 0;
-        float cena = 0;
-        string nazwa = "Brak";
-        Produkt(string nz, string cn, string il)
+        List<Produkt> produkty = new List<Produkt>();       //Tworzy liste produktow
+
+        private static void ShowMenu()
         {
-            nazwa = nz;
-            cena = float.Parse(cn);
-            ilosc = Int32.Parse(il);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("****\tZARZĄDZANIE MAGAZYNEM\t****");
+            Console.WriteLine(" 1. Dodaj Produkt");
+            Console.WriteLine(" 2. Sprawdź Stan");
+            Console.WriteLine(" 3. Znajdź Produkt");
+            Console.WriteLine(" 4. Zmień ilość produktu");
+            Console.WriteLine(" 0. Koniec Progamu");
         }
 
-        void Set_Cena(string cn)
+        private static int WyborOpcji()
         {
-            cena = float.Parse(cn);
-        }
-        void Set_ilosc(string il)
-        {
-            ilosc = Int32.Parse(il);
+            int wybor = 0;
+            string str_wybor;
+            bool good = false;
+
+            while (good == false)
+            {
+                try
+                {
+                    Console.Write(" Wybór: ");
+                    str_wybor = Console.ReadLine();
+                    wybor = Convert.ToInt32(str_wybor); ;
+                    good = true;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("\nPodaj Liczbę!");
+                    good = false;
+                }
+            }
+            return wybor;
         }
 
-        void Wyswietl()
+        private void DodajProdukt()
         {
-            Console.Write("\nProdukt:{0,30}\n", nazwa);
-            Console.Write("Cena:{0,33}\n", cena);
-            Console.Write("Ilość:{0,32}\n\n", ilosc);
-        }
+            bool good = false;
+
+            while (good == false)
+            {
+                try
+                {
+                    float a, b;
+                    Console.Write("\nPodaj nazwę produktu: ");
+                    string naz = Console.ReadLine();
+
+                    Console.Write("Podaj cenę produktu: ");
+                    string cen = Console.ReadLine();
+                    a = Convert.ToSingle(cen);
+
+                    Console.Write("Podaj ilość produktu: ");
+                    string ilo = Console.ReadLine();
+                    b = Convert.ToSingle(ilo);
+
+                    produkty.Add(new Produkt { Nazwa = naz, Cena = a, Ilosc = b });
+                    good = true;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("\nPodaj Poprawną Cenę lub Ilość produktu!");
+                    good = false;
+                }
+            }
+            Console.WriteLine("\nZapisano Produkt!\n");
+            Console.WriteLine("Naciśnij enter aby kontynuować...\n");
+            Console.ReadLine();
+            Console.Clear();
+        }   // Non static???
+
+        private void WyswietlProdukty()
+        {
+            foreach (Produkt elementy in produkty)
+            {
+                Console.Write("\nProdukt:{0,30}\n", elementy.Nazwa);
+                Console.Write("Cena:{0,33}\n", elementy.Cena);
+                Console.Write("Ilość:{0,32}\n\n", elementy.Ilosc);
+            }
+            Console.WriteLine("\nProdukty Znalezione: {0}\n", produkty.Count);
+            Console.WriteLine("Naciśnij enter aby kontynuować...\n");
+            Console.ReadLine();
+            Console.Clear();
+        } // Non static??? :(
 
 
-        /*////////////// MAIN ////////////*/
 
         static void Main(string[] args)
         {
-            int wybor;
-            string str_wybor;
 
-            List<Produkt> list = new List<Produkt>(); //Tworzy liste produktow
+            ShowMenu();
 
+            switch (WyborOpcji())
+            {
+                case 1:
+
+                    break;
+
+                default:
+                    Console.WriteLine("Nie ma takiego knefla!");
+                    break;
+            }
+
+
+        }
+
+        /*
             while (true)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("****\tZARZĄDZANIE MAGAZYNEM\t****");
-                Console.WriteLine(" 1. Dodaj Produkt");
-                Console.WriteLine(" 2. Sprawdź Stan");
-                Console.WriteLine(" 3. Znajdź Produkt");
-                Console.WriteLine(" 4. Zmień ilość produktu");
-                Console.WriteLine(" 0. Koniec Progamu");
-                Console.Write(" Wybór: ");
-                str_wybor = Console.ReadLine();
-                wybor = Int32.Parse(str_wybor);
+                
                 // kOMENT
                 switch (wybor)
                 {
                     case 1:  // Dodawanie produktu
                         {
-                            Console.Write("\nPodaj nazwę produktu: ");
-                            string naz = Console.ReadLine();
-                            Console.Write("Podaj cenę produktu: ");
-                            string cen = Console.ReadLine();
-                            Console.Write("Podaj ilość produktu: ");
-                            string ilo = Console.ReadLine();
-                            list.Add(new Produkt(naz, cen, ilo)); // Dodaje element do listy produktow
-                            Console.WriteLine("\nZapisano Produkt!\n");
-                            Console.WriteLine("Naciśnij enter aby kontynuować...\n");
-                            Console.ReadLine();
-                            Console.Clear();
+
+        
                             break;
                         }
                     case 2: // Wyswietlanie listy produktow
@@ -92,7 +147,7 @@ namespace Baza_Produktow
                             Console.Write("Wprowadź nazwę produktu: ");
                             string nazwap = Console.ReadLine();
 
-                            bool znaleziono = false;
+bool znaleziono = false;
 
                             foreach (Produkt elementy in list)
                             {
@@ -123,7 +178,7 @@ namespace Baza_Produktow
                             Console.Write("Wprowadź nazwę produktu: ");
                             string nazwap = Console.ReadLine();
 
-                            bool znaleziono = false;
+bool znaleziono = false;
 
                             foreach (Produkt elementy in list)
                             {
@@ -132,7 +187,7 @@ namespace Baza_Produktow
                                     Console.WriteLine("\nIlość zapamiętana: {0,13}\n", elementy.ilosc);
                                     Console.Write("Wprowadź obecny stan ilościowy: ");
                                     string nil = Console.ReadLine();
-                                    elementy.Set_ilosc(nil);
+elementy.Set_ilosc(nil);
 
                                     Console.WriteLine("\nZmieniono ilość!\n");
                                     Console.WriteLine("Naciśnij enter aby kontynuować...\n");
@@ -172,7 +227,7 @@ namespace Baza_Produktow
             }
             Console.ReadKey();
             Console.ReadKey();
-
-        }
+            */
     }
 }
+
