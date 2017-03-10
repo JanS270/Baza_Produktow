@@ -97,7 +97,6 @@ namespace Baza_Produktow
 
         private void SzukajProduktu()
         {
-
             Console.Write("Wprowadź nazwę produktu: ");
             string nazwap = Console.ReadLine();
 
@@ -124,11 +123,59 @@ namespace Baza_Produktow
                 Console.ReadLine();
                 Console.Clear();
             }
-
             znaleziono = false;
-
         }
 
+        private void ZmianaIlosciProduktu()
+        {
+            bool good = false;
+
+            while (good == false)
+            {
+                Console.Write("Wprowadź nazwę produktu: ");
+                string nazwap = Console.ReadLine();
+
+                bool znaleziono = false;
+
+                foreach (Produkt elementy in produkty)
+                {
+                    try
+                    {
+                        if (elementy.Nazwa.Equals(nazwap))
+                        {
+                            Console.WriteLine("\nIlość zapamiętana: {0,13}\n", elementy.Ilosc);
+                            Console.Write("Wprowadź obecny stan ilościowy: ");
+                            string nil = Console.ReadLine();
+                            elementy.Ilosc = Convert.ToSingle(nil);
+
+                            Console.WriteLine("\nZmieniono ilość!\n");
+                            Console.WriteLine("Naciśnij enter aby kontynuować...\n");
+                            Console.ReadLine();
+                            Console.Clear();
+
+                            znaleziono = true;
+                            good = true;
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("\nWprowadzono Błędne Dane!");
+                        Console.ReadLine();
+                        good = false;
+                    }
+
+                }
+
+                if (znaleziono == false)
+                {
+                    Console.WriteLine("\nNieznany produkt.\n");
+                    Console.WriteLine("Naciśnij enter aby kontynuować...\n");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
+                znaleziono = false;
+            }
+        }
 
         static void Main(string[] args)     // MAIN 
         {
@@ -153,6 +200,10 @@ namespace Baza_Produktow
                         Instancja.SzukajProduktu();
                         break;
 
+                    case 4:
+                       Instancja.ZmianaIlosciProduktu();
+                        break;
+
                     case 0:
                         run = false;
                         Console.WriteLine("\nKoniec Programu.");
@@ -162,7 +213,6 @@ namespace Baza_Produktow
                     default:
                         Console.WriteLine("Nie ma takiego knefla!\n");
                         break;
-
                 }
             }
 
@@ -170,65 +220,4 @@ namespace Baza_Produktow
     }
 }
 
-
-
-
-
-       /*
-                    case 4: // zmiana ilosci produktu
-                        {
-                            Console.Write("Wprowadź nazwę produktu: ");
-                            string nazwap = Console.ReadLine();
-
-    bool znaleziono = false;
-
-                            foreach (Produkt elementy in list)
-                            {
-                                if (elementy.nazwa.Equals(nazwap))
-                                {
-                                    Console.WriteLine("\nIlość zapamiętana: {0,13}\n", elementy.ilosc);
-                                    Console.Write("Wprowadź obecny stan ilościowy: ");
-                                    string nil = Console.ReadLine();
-    elementy.Set_ilosc(nil);
-
-                                    Console.WriteLine("\nZmieniono ilość!\n");
-                                    Console.WriteLine("Naciśnij enter aby kontynuować...\n");
-                                    Console.ReadLine();
-                                    Console.Clear();
-
-                                    znaleziono = true;
-                                }
-                            }
-
-                            if (znaleziono == false)
-                            {
-                                Console.WriteLine("\nNieznany produkt.\n");
-                                Console.WriteLine("Naciśnij enter aby kontynuować...\n");
-                                Console.ReadLine();
-                                Console.Clear();
-                            }
-
-                            znaleziono = false;
-
-                            break;
-                        }
-
-                    case 0: // Koniec programu
-                        {
-                            return;
-                        }
-                    default:
-                        {
-                            Console.WriteLine("\nNie ma takiej opcji.\n");
-                            Console.WriteLine("Naciśnij enter aby kontynuować...\n");
-                            Console.ReadLine();
-                            Console.Clear();
-                            break;
-                        }
-                }
-            }
-            Console.ReadKey();
-            Console.ReadKey();
-            */
-  
 
